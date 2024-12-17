@@ -544,29 +544,29 @@ class Call(PyTgCalls):
     async def ping(self):
         pings = []
         if config.STRING1:
-            pingelf.one.ping)
+            pings.append(await self.one.ping)
         if config.STRING2:
-            pingstwo.ping)
+            pings.append(await self.two.ping)
         if config.STRING3:
-            pin self.three.ping)
+            pings.append(await self.three.ping)
         if config.STRING4:
-            pingst self.four.ping)
+            pings.append(await self.four.ping)
         if config.STRING5:
-            piing)
+            pings.append(await self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Client...\n")
         if config.STRING1:
-            await self.onet()
+            await self.one.start()
         if config.STRING2:
-            await self.two()
+            await self.two.start()
         if config.STRING3:
-            await self.thart()
-        if config.STRIN
-            await self.four.t()
-        if config.STRING5
-            await self.fivart()
+            await self.three.start()
+        if config.STRING4:
+            await self.four.start()
+        if config.STRING5:
+            await self.five.start()
 
     async def decorators(self):
         @self.one.on_kicked()
