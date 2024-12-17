@@ -1,3 +1,5 @@
+import threading
+from flask import Flask
 import asyncio
 import importlib
 
@@ -12,8 +14,14 @@ from ERAVIBES.plugins import ALL_MODULES
 from ERAVIBES.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
 
+# Flask app definition
+flask_app = Flask(__name__)
 
-async def init():
+@flask_app.route("/")
+def home():
+    return "ERAVIBES Bot is running !"
+
+async def init_bot():
     if (
         not config.STRING1
         and not config.STRING2
@@ -31,11 +39,12 @@ async def init():
         users = await get_banned_users()
         for user_id in users:
             BANNED_USERS.add(user_id)
-    except:
-        pass
+    except Exception as e:
+        LOGGER("ERAVIBES").error(f"Error loading banned users: {e}")
+
     await app.start()
     for all_module in ALL_MODULES:
-        importlib.import_module("ERAVIBES.plugins" + all_module)
+        importlib.import_module(f"ERAVIBES.plugins.{all_module}")
     LOGGER("ERAVIBES.plugins").info("✦ Successfully Imported Modules...💞")
     await userbot.start()
     await ERA.start()
@@ -43,11 +52,12 @@ async def init():
         await ERA.stream_call("https://te.legra.ph/file/29f784eb49d230ab62e9e.mp4")
     except NoActiveGroupCall:
         LOGGER("ERAVIBES").error(
-            "✦ Please turn on the videochat of your log group\channel.\n\n✦ Stopping Bot...💣"
+            "✦ Please turn on the videochat of your log group/channel.\n\n✦ Stopping Bot...💣"
         )
         exit()
-    except:
-        pass
+    except Exception as e:
+        LOGGER("ERAVIBES").error(f"Error starting ERA stream: {e}")
+
     await ERA.decorators()
     LOGGER("ERAVIBES").info(
         "✦ Created By ➥ The Rishu...🐝"
@@ -57,6 +67,13 @@ async def init():
     await userbot.stop()
     LOGGER("ERAVIBES").info("❖ Stopping Rishu Music Bot...💌")
 
+def run_flask():
+    flask_app.run(host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
-    asyncio.get_event_loop().run_until_complete(init())
+    # Flask server in a separate thread
+    flask_thread = threading.Thread(target=run_flask, daemon=True)
+    flask_thread.start()
+
+    # Run the async bot
+    asyncio.run(init_bot())
