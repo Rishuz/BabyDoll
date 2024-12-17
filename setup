@@ -65,8 +65,8 @@ packages(){
 node(){
 	command -v npm &>/dev/null && return
 	pprint "Installing Nodejs and Npm..  "
-	curl -fssL https://dee.com/setup_19.x | sudo -E bash - &>nodelog.txt &&
-	sudo apt install -y nodejs og.txt &&
+	curl -fssL https://deb.nodesource.com/setup_19.x | sudo -E bash - &>nodelog.txt &&
+	sudo apt install -y nodejs &>>nodelog.txt &&
 	sudo npm i -g npm &>>nodelog.txt &&
 	pprint "SUCCESS!\n" "cgreen" || (pprint "FAIL.\n" "cred"; exit 1)
 }
@@ -74,7 +74,7 @@ node(){
 
 installation(){
 	pprint "\n\nUpgrading pip and installing dependency packages..."
-	pip3 install -U pip &>>pt &&
+	pip3 install -U pip &>>pypilog.txt &&
 	pip3 install -U -r requirements.txt &>>pypilog.txt &&
 	pprint "DONE.\n" "cgreen" && return
 	pprint "FAIL.\n" "cred"
@@ -85,7 +85,7 @@ clear
 pprint "Welcome to ERA VIBES Setup Installer\n\n"
 pprint "If you see any error during Installation Process, Please refer to these files for logs: "
 pprint "\nFor node js errors , Checkout nodelog.txt"
-pprint "\nFor pypi parors , Checkolog.txt"
+pprint "\nFor pypi packages errors , Checkout pypilog.txt"
 sleep 1
 pprint "\n\nScript needs sudo privileges in order to update & install packages.\n"
 sudo test
@@ -94,7 +94,7 @@ update
 packages
 node
 installation
-pprint "\n\n\n\n\nAnonXMusic Inson Completed !" "cgreen"
+pprint "\n\n\n\n\nAnonXMusic Installation Completed !" "cgreen"
 sleep 1
 clear
 
@@ -118,33 +118,33 @@ API_HASH = $api_hash
 BOT_TOKEN = $bot_tokenasync def ping(self):
         pings = []
         if config.STRING1:
-            pings.append(await ping)
+            pings.append(await self.one.ping)
         if config.STRING2:
-            pings.append(awaito.ping)
+            pings.append(await self.two.ping)
         if config.STRING3:
-            pings.append(awaite.ping)
+            pings.append(await self.three.ping)
         if config.STRING4:
-            pings.append(await .ping)
+            pings.append(await self.four.ping)
         if config.STRING5:
-            pings.append(awai.ping)
+            pings.append(await self.five.ping)
         return str(round(sum(pings) / len(pings), 3))
 
     async def start(self):
         LOGGER(__name__).info("Starting PyTgCalls Client...\n")
         if config.STRING1:
-            await self.tart()
+            await self.one.start()
         if config.STRING2:
-            await self.art()
+            await self.two.start()
         if config.STRING3:
-            await self.tart()
+            await self.three.start()
         if config.STRING4:
-            await self.rt()
+            await self.four.start()
         if config.STRING5:
-            await selfart()
+            await self.five.start()
 MONGO_DB_URI = $mongo_db
 LOGGER_ID = $logger
 STRING_SESSION = $string_session
-OWNER_ID = $"" > .env
+OWNER_ID = $ownid""" > .env
 clear
 
 pprint "\n\n\nThanks for using ERA VIBES installer, your vars have been saved successfully ! \nIf you wanna add more variables add them in your env by : vi .env"
