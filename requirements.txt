@@ -55,6 +55,7 @@ pytz
 pydub
 apscheduler
 gtts
+flask
 py-tgcalls==0.9.7
 lexica-api==1.5.7
 git+https://github.com/KurimuzonAkuma/pyrogram@dev
