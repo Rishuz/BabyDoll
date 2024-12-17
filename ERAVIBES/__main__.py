@@ -14,7 +14,6 @@ from ERAVIBES.plugins import ALL_MODULES
 from ERAVIBES.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
 
-# Flask app definition
 flask_app = Flask(__name__)
 
 @flask_app.route("/")
@@ -71,9 +70,7 @@ def run_flask():
     flask_app.run(host="0.0.0.0", port=8000)
 
 if __name__ == "__main__":
-    # Flask server in a separate thread
     flask_thread = threading.Thread(target=run_flask, daemon=True)
     flask_thread.start()
 
-    # Run the async bot
     asyncio.run(init_bot())
